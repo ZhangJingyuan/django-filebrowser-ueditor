@@ -1,0 +1,107 @@
+=====
+filebrowser-ueditor
+=====
+Ueditor是国内广泛使用的一款开源编辑器，但是其缺点是图片管理功能比较简陋，图片选择不显示图片名，无法删除图片以及
+无法创建文件夹等问题导致图片很难维护。
+
+filebrowser-ueditor基于django-filebrowser和DjangoUeditor，主要功能是整合ueditor与filebrowser，
+利用ueditor的接口进行二次开发，使用户可以在ueditor中使用filebrowser进行图片和文件的管理，从filebrowser中选择文件
+插入到编辑区域内。
+
+filebrowser-ueditor保留了django-filebrowser与DjangoUeditor的全部功能，用户可以自行扩展。为方便起见，两个apps被
+合并为一个，用户直接下载安装即可使用。在文档中给出在已安装两个apps时整合方式，方便以后扩展。
+
+为减少app所占空间，删除了ueditor的examples与filebrowser的test等不影响功能的文件。
+
+本文仅给出通用配置方式，关于filebrowser与ueditor的具体详细配置，用户可以自行到两个项目的主页进行查询
+
+
+Quick start
+-----------
+
+1. 添加app，由于filebrowser依赖grappelli，需要将grappelli放在admin之前
+
+    INSTALLED_APPS = (
+    	'grappelli',
+    	'django.contrib.admin',
+        
+        ...
+
+        'filebrowser_ueditor',
+        'your_app',
+    )
+
+2. 添加urls,在settings和urls配置好MEDIA_URL，并建立文件夹，否则可能无法显示图片。filebrowser默认上传路径是MEDIA_URL/uploads/,
+详见filebrowser官方文档
+
+    from django.conf.urls import patterns, include, url
+    from django.contrib import admin
+    from grappelli.urls import urlpatterns as grappelli_urls
+    from filebrowser_ueditor.sites import site
+    from django.conf import settings
+    from django.conf.urls.static import static
+
+    urlpatterns = patterns('',
+        url(r'^ueditor/',include('DjangoUeditor.urls' )),
+        url(r'^grappelli/', include('grappelli.urls')),
+        url(r'^admin/', include(admin.site.urls)),
+        url(r'^admin/filebrowser/', include(site.urls)),
+
+    )+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+3. 使用，以models为例，在toolbars内加入selectimage，并注册admin。其他的使用情况在官方文档中都很详细，这里不赘述。
+from django.db import models
+from filebrowser_ueditor.fields import FileBrowseField
+from filebrowser_ueditor.models import UEditorField
+from filebrowser_ueditor.commands import UEditorEventHandler
+
+class Article(models.Model):
+    display_image = FileBrowseField(u'封面图片', max_length=200, directory='',
+        extensions=['.jpg','.jpeg','.gif','.png','.tif','.tiff'],blank=True,null=True)
+    content=UEditorField(
+        verbose_name=u'内容',
+        width=800,
+        height=400,
+        toolbars=[
+            ['undo', #撤销
+            'redo', #重做
+            'bold', #加粗
+            'indent', #首行缩进
+            'italic', #斜体
+            'underline', #下划线
+            'strikethrough', #删除线
+            'fontsize', #字号
+            'fontfamily',
+            'source', #源代码
+            'blockquote', #引用
+            'pasteplain', #纯文本粘贴模式
+            'horizontal', #分隔线
+            'removeformat', #清除格式
+            'link', #超链接
+            'unlink', #取消链接        
+            'simpleupload', #单图上传
+            'insertimage', #多图上传
+            'insertvideo', #视频
+            'justifyleft', #居左对齐
+            'justifyright', #居右对齐
+            'justifycenter', #居中对齐
+            'justifyjustify', #两端对齐
+            'forecolor', #字体颜色
+            'backcolor', #背景色
+            'lineheight', #行间距
+            'fullscreen', #全屏
+            'preview', #预览
+            'selectimage',#二次开发的工具，需要用filebrowser添加图片时要添加此项
+            ],
+        ],
+        imagePath="uploads/", 
+        filePath="", 
+        upload_settings={"imageMaxSize":1204000},
+        settings={},
+        command=None,
+        event_handler=UEditorEventHandler(),
+        blank=True,
+        null=True,
+    )
+
+4. 运行项目，进入admin界面编辑界面，selectimage使用了ueditor默认的单张图片上传图标，点击即可使用。

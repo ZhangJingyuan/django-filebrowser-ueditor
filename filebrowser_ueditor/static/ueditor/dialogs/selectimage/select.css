@@ -1,0 +1,146 @@
+@charset "utf-8";
+
+/* dialog样式 */
+.wrapper {
+    zoom: 1;
+    width: 630px;
+    *width: 626px;
+    height: 380px;
+    margin: 0 auto;
+    padding: 10px;
+    position: relative;
+    font-family: sans-serif;
+}
+
+/*tab样式框大小*/
+.tabhead {
+    float:left;
+}
+.tabbody {
+    width: 100%;
+    height: 346px;
+    position: relative;
+    clear: both;
+}
+
+.tabbody .panel {
+    position: absolute;
+    width: 0;
+    height: 0;
+    background: #fff;
+    overflow: hidden;
+    display: none;
+}
+
+.tabbody .panel.focus {
+    width: 100%;
+    height: 346px;
+    display: block;
+}
+
+/* 远程图片样式 */
+#remote {
+    z-index: 200;
+}
+
+#remote .top{
+    width: 100%;
+    margin-top: 25px;
+}
+#remote .left{
+    display: block;
+    float: left;
+    width: 300px;
+    height:10px;
+}
+#remote .right{
+    display: block;
+    float: right;
+    width: 300px;
+    height:10px;
+}
+#remote .row{
+    margin-left: 20px;
+    clear: both;
+    height: 40px;
+}
+
+#remote .row label{
+    text-align: center;
+    width: 50px;
+    zoom:1;
+    _display: inline;
+    display:inline-block;
+    vertical-align: middle;
+}
+#remote .row label.algnLabel{
+    float: left;
+
+}
+
+#remote input.text{
+    width: 150px;
+    padding: 3px 6px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+#remote input.text:focus {
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+}
+#remote #ueditor_url{
+    width: 500px;
+    margin-bottom: 2px;
+}
+
+#remote #preview{
+    clear: both;
+    width: 260px;
+    height: 240px;
+    z-index: 9999;
+    margin-top: 10px;
+    background-color: #eee;
+    overflow-y: scroll;
+}
+
+#remote #select-button{
+    display: inline-block;
+    background-position: 0 -1037px;
+    background-color: #e1f0f5;
+    background-image: url('images/icons-s846f870921.png');
+    background-repeat: no-repeat;
+    position: relative;
+    margin: 0 0 -5px -25px;
+    padding: 0;
+    width: 28px;
+    height: 28px;
+    -moz-border-radius-topright: 3px;
+    -webkit-border-top-right-radius: 3px;
+    border-top-right-radius: 3px;
+    -moz-border-radius-bottomright: 3px;
+    -webkit-border-bottom-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    cursor: pointer;
+    overflow: hidden;
+    vertical-align: top;
+    color: #fff;
+    border: 1px solid #ccc; 
+}
+
+#remote #previewimage_ueditor_url{
+    max-width:100%;
+}

@@ -1,0 +1,8 @@
+include LICENSE
+include README.rst
+recursive-include docs *
+recursive-include filebrowser_ueditor/locale *
+recursive-include filebrowser_ueditor/management *
+recursive-include filebrowser_ueditor/static *
+recursive-include filebrowser_ueditor/templates *
+recursive-include filebrowser_ueditor/templatetags *
